@@ -1,0 +1,9 @@
+mi_proyecto_dbt:
+  outputs:
+    dev:
+      type: duckdb
+      path: "md:my_db"
+      extensions:
+        - motherduck
+      motherduck_token: "{{ env_var(eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImJlYXRyaXpsZXpjYW5vY2FjZXJlc0BnbWFpbC5jb20iLCJtZFJlZ2lvbiI6ImF3cy11cy1lYXN0LTEiLCJzZXNzaW9uIjoiYmVhdHJpemxlemNhbm9jYWNlcmVzLmdtYWlsLmNvbSIsInBhdCI6IjVzUGZmcjZtUTlBdEtBM3pyQUR0VmRNaU12dTd0Ml9XRW1aTmtTRGdkUEkiLCJ1c2VySWQiOiI1MWFkNWZhMS0zMTlkLTQwZDYtODkxOC0yYmMxN2IxOTk2OTkiLCJpc3MiOiJtZF9wYXQiLCJyZWFkT25seSI6ZmFsc2UsInRva2VuVHlwZSI6InJlYWRfd3JpdGUiLCJpYXQiOjE3NzI1NzEzODB9.sSWgkF36ljexxgKUmTi3LWaHCt8Lbsb9ORlRyjgV8vw) }}"
+  target: dev
