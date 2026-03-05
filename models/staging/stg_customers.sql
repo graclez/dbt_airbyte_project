@@ -1,2 +1,2 @@
 select *
-from {{ source('raw','customers') }}
+from {{ source('raw','customer') }}
