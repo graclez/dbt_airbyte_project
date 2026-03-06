@@ -1,0 +1,77 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Modelo staging de clientes cargados desde Postgres mediante Airbyte."
+    columns:
+      - name: email
+        description: "Correo electrónico del cliente"
+
+      - name: active
+        description: "Indicador de actividad del cliente"
+
+      - name: store_id
+        description: "Identificador de la tienda"
+
+      - name: last_name
+        description: "Apellido del cliente"
+
+  - name: stg_titanic
+    description: "Modelo staging del dataset Titanic cargado mediante Airbyte."
+    tests:
+      - dbt_expectations.expect_table_row_count_to_be_between:
+          arguments:
+            min_value: 800
+            max_value: 1000
+
+    columns:
+      - name: survived
+        description: "Indica si el pasajero sobrevivió"
+        tests:
+          - not_null
+
+      - name: sex
+        description: "Sexo del pasajero"
+        tests:
+          - not_null
+
+      - name: age
+        description: "Edad del pasajero"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 100
+
+      - name: fare
+        description: "Tarifa pagada por el pasajero"
+        tests:
+          - dbt_expectations.expect_column_values_to_be_between:
+              arguments:
+                min_value: 0
+                max_value: 600
+
+  - name: int_passenger_stats
+    description: "Modelo intermedio que agrupa pasajeros por estado de supervivencia."
+    columns:
+      - name: survived
+        description: "Estado de supervivencia"
+
+      - name: total_passengers
+        description: "Cantidad total de pasajeros"
+        tests:
+          - not_null
+
+  - name: mart_survival_summary
+    description: "Modelo final mart con el resumen de pasajeros sobrevivientes y no sobrevivientes."
+    columns:
+      - name: survived
+        description: "Indicador de supervivencia"
+        tests:
+          - accepted_values:
+              values: [0, 1]
+
+      - name: total_passengers
+        description: "Total de pasajeros por categoría"
+        tests:
+          - not_null
